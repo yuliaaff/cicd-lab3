@@ -27,12 +27,12 @@ pipeline {
         stage('Deploy'){
             steps{
                 sh '''
-                    containers_to_stop=$(docker ps -q --filter "ancestor=${IMAGE_NAME}")
+                    containers_to_stop=$(docker ps -q --filter "publish=${PORT}")
                     if [ ! -z "$containers_to_stop" ]; then
                         docker stop $containers_to_stop
                         docker rm $containers_to_stop
                     else
-                        echo "No running containers found for image: ${IMAGE_NAME}"
+                        echo "No containers found using port: ${PORT}"
                     fi
                     '''
                 sh "docker run -d --expose ${PORT} -p ${PORT}:${PORT} ${IMAGE_NAME}"
