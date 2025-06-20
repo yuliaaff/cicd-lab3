@@ -5,7 +5,7 @@ pipeline {
         IMAGE_NAME = "${env.BRANCH_NAME == 'main' ? 'nodemain:v1.0' : 'nodedev:v1.0'}"
     }
     tools {
-        nodejs 'node'  // Имя установки из Global Tool Configuration
+        nodejs 'node'
     }
     stages {
         stage('Build'){
@@ -16,6 +16,11 @@ pipeline {
         stage('Test'){
             steps{
                 sh 'npm test'
+            }
+        }
+        stage('Check Docker') {
+            steps {
+                sh 'docker --version'
             }
         }
         stage('Docker Build'){
