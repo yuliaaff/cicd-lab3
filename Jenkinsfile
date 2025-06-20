@@ -35,7 +35,7 @@ pipeline {
                         echo "No containers found using port: ${PORT}"
                     fi
                     '''
-                sh "docker run -d --expose ${PORT} -p ${PORT}:${PORT} ${IMAGE_NAME}"
+                sh "docker run -d --expose ${PORT} -p ${PORT}:3000 ${IMAGE_NAME}"
             }
         }
     }
