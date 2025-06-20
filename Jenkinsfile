@@ -5,6 +5,11 @@ pipeline {
         IMAGE_NAME = "${env.BRANCH_NAME == 'main' ? 'nodemain:v1.0' : 'nodedev:v1.0'}"
     }
     stages {
+        stage('Declarative: Tool Install'){
+            steps{
+                tool name: 'NodeJS', type: 'hudson.plugins.nodejs.tools.NodeJSInstallation'
+            }
+        }
         stage('Build'){
             steps{
                 sh 'npm install'
