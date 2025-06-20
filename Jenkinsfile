@@ -3,6 +3,7 @@ pipeline {
     environment { 
         PORT = "${env.BRANCH_NAME == 'main' ? '3000' : '3001'}"
         IMAGE_NAME = "${env.BRANCH_NAME == 'main' ? 'nodemain:v1.0' : 'nodedev:v1.0'}"
+        PATH = "/usr/local/bin:${env.PATH}"
     }
     tools {
         nodejs 'node'
