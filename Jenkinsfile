@@ -19,11 +19,6 @@ pipeline {
                 sh 'npm test'
             }
         }
-        stage('Check Docker') {
-            steps {
-                sh 'docker --version'
-            }
-        }
         stage('Docker Build'){
             steps{
                 sh "docker build -t ${IMAGE_NAME} ."
@@ -31,7 +26,7 @@ pipeline {
         }
         stage('Deploy'){
             steps{
-                sh 'docker stop $(docker ps -q --filter "expose=${PORT}") && docker rm $(docker ps -aq --filter "expose=${PORT}")'
+                sh 'docker stop $(docker ps -q --filter "ancestor=${IMAGE_NAME}") && docker rm $(docker ps -aq --filter "ancestor=${IMAGE_NAME}")'
                 sh 'docker run -d --expose ${PORT} -p ${PORT}:${PORT} ${IMAGE_NAME}'
             }
         }
