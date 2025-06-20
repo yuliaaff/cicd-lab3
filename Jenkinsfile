@@ -5,12 +5,11 @@ pipeline {
         IMAGE_NAME = "${env.BRANCH_NAME == 'main' ? 'nodemain:v1.0' : 'nodedev:v1.0'}"
     }
     stages {
-        stages {
-            stage('Check Node Version') {
-                steps {
-                    sh 'node -v'
-                    sh 'npm -v'
-                }
+
+        stage('Check Node Version') {
+            steps {
+                sh 'node -v'
+                sh 'npm -v'
             }
         }
         stage('Declarative: Tool Install'){
