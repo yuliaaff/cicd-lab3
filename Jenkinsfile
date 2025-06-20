@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage('Declarative: Tool Install'){
             steps{
-                tool name: 'NodeJS', type: 'hudson.plugins.nodejs.tools.NodeJSInstallation'
+                tool name: 'node', type: 'hudson.plugins.nodejs.tools.NodeJSInstallation'
             }
         }
         stage('Build'){
