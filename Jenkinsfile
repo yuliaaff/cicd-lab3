@@ -4,12 +4,10 @@ pipeline {
         PORT = "${env.BRANCH_NAME == 'main' ? '3000' : '3001'}"
         IMAGE_NAME = "${env.BRANCH_NAME == 'main' ? 'nodemain:v1.0' : 'nodedev:v1.0'}"
     }
+    tools {
+        nodejs 'node'
+    }
     stages {
-        stage('Declarative: Tool Install'){
-            steps{
-                tool name: 'NodeJS 7.8.0', type: 'hudson.plugins.nodejs.tools.NodeJSInstallation'
-            }
-        }
         stage('Build'){
             steps{
                 sh 'npm install'
