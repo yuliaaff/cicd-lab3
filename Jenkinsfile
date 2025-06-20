@@ -26,8 +26,16 @@ pipeline {
         }
         stage('Deploy'){
             steps{
-                sh 'docker stop $(docker ps -q --filter "ancestor=${IMAGE_NAME}") && docker rm $(docker ps -aq --filter "ancestor=${IMAGE_NAME}")'
-                sh 'docker run -d --expose ${PORT} -p ${PORT}:${PORT} ${IMAGE_NAME}'
+                sh '''
+                    containers_to_stop=$(docker ps -q --filter "ancestor=${IMAGE_NAME}")
+                    if [ ! -z "$containers_to_stop" ]; then
+                        docker stop $containers_to_stop
+                        docker rm $containers_to_stop
+                    else
+                        echo "No running containers found for image: ${IMAGE_NAME}"
+                    fi
+                    '''
+                sh "docker run -d --expose ${PORT} -p ${PORT}:${PORT} ${IMAGE_NAME}"
             }
         }
     }
